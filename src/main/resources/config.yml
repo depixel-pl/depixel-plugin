@@ -1,0 +1,16 @@
+chat:
+  # {player} -> Nick Gracza
+  displayName: "{player}"
+  delimiter: "&r»"
+  # {message} -> wiadomość
+  message: "{message}"
+
+msg:
+  #
+  # {sender} -> Osoba wysyłająca wiadomość
+  # {reciever} -> Osoba otrzymująca wiadomość
+  #
+  format: "[{sender} &7-> &f{reciever}] » {message}"
+
+messages:
+  playerNotOnline: "&cGracz nie jest online."

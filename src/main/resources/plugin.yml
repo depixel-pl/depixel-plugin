@@ -1,0 +1,28 @@
+name: depixel
+version: '${project.version}'
+main: pl.nivse.depixel.Depixel
+api-version: 1.20
+default-permission: op
+permissions:
+  depixel.color:
+    default: op
+  depixel.bold:
+    default: op
+  depixel.italic:
+    default: op
+  depixel.underlined:
+    default: op
+  depixel.strikethrough:
+    default: op
+  depixel.obfuscated:
+    default: op
+  depixel.gradient:
+    default: op
+  depixel.rainbow:
+    default: op
+  depixel.hover:
+    default: op
+  depixel.click:
+    default: op
+  depixel.legacy:
+    default: op
