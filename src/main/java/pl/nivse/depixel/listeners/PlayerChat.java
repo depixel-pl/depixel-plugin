@@ -36,16 +36,17 @@ public class PlayerChat implements Listener {
         formattingPermissions.put(new Permission("depixel.click"), StandardTags.clickEvent());
     }
 
-    private Component parseDisplayName(Player player, String displayName){
+    //Parse string without checking formatting permissions
+    private Component parseString(Player player, String s){
 
-        displayName = displayName.replace("{player}", player.getName());
-        displayName = PlaceholderAPI.setPlaceholders(player, displayName);
-        displayName = Utils.toMiniMessage(displayName);
+        s = PlaceholderAPI.setPlaceholders(player, s);
+        s = Utils.toMiniMessage(s);
 
-        return miniMessage.deserialize(displayName);
+        return miniMessage.deserialize(s);
     }
 
-    private Component parseMessage(Player player, String message){
+    //Parse string while checking formatting permissions
+    private Component parseStringWithPermissions(Player player, String s){
 
         TagResolver.Builder tagResolver = TagResolver.builder();
         formattingPermissions.forEach((permission, resolver) -> {
@@ -55,20 +56,20 @@ public class PlayerChat implements Listener {
         });
 
         if(player.hasPermission("depixel.legacy")){
-            message = Utils.toMiniMessage(message);
+            s = Utils.toMiniMessage(s);
         }
 
         MiniMessage parser = MiniMessage.builder().tags(tagResolver.build()).build();
-        return parser.deserialize(message);
+        return parser.deserialize(s);
     }
 
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void playerChatEvent(AsyncChatEvent e){
         e.renderer(((player, sourceDisplayName, originalMessage, audience) -> {
-            Component displayName = parseDisplayName(player, Depixel.getPlugin().getConfig().getString("chat.displayName"));
-            Component delimiter = parseDisplayName(player, Depixel.getPlugin().getConfig().getString("chat.delimiter"));
-            Component message = parseMessage(player, plainTextComponentSerializer.serialize(originalMessage));
+            Component displayName = parseString(player, Depixel.getPlugin().getConfig().getString("chat.displayName").replace("{player}", player.getName()));
+            Component delimiter = parseString(player, Depixel.getPlugin().getConfig().getString("chat.delimiter"));
+            Component message = parseStringWithPermissions(player, plainTextComponentSerializer.serialize(originalMessage));
 
             Component renderedMessage = Component.empty().append(displayName).append(Component.text(" ")).append(delimiter).append(Component.text(" ")).append(message);
             return renderedMessage;

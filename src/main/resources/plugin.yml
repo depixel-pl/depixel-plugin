@@ -5,24 +5,38 @@ api-version: 1.20
 default-permission: op
 permissions:
   depixel.color:
+    description: Pozwala używać kolory (MiniMessage)
     default: op
   depixel.bold:
+    description: Pozwala używać pogrubienia (MiniMessage)
     default: op
   depixel.italic:
+    description: Pozwala używać pochylenia (MiniMessage)
     default: op
   depixel.underlined:
+    description: Pozwala używać podkreślenia (MiniMessage)
     default: op
   depixel.strikethrough:
+    description: Pozwala używać przekreślenia (MiniMessage)
     default: op
   depixel.obfuscated:
+    description: Pozwala na zakrycie wiadomości (MiniMessage)
     default: op
   depixel.gradient:
+    description: Pozwala używać gradientu (MiniMessage)
     default: op
   depixel.rainbow:
+    description: Pozwala używać tęczy (MiniMessage)
     default: op
   depixel.hover:
+    description: Pozwala na dodawanie do wiadomości tooltipa po najechaniu na nią (MiniMessage)
     default: op
   depixel.click:
+    description: Pozwala na dodawanie do wiadomości "przycisków"(?) (MiniMessage)
     default: op
   depixel.legacy:
+    description: Pozwala na używanie legacy formatowania w wiadomościach, np "&e&lSiema!"
+    default: op
+  depixel.helpOp:
+    description: Pozwala na widzenie wiadomości na HelpOP
     default: op
