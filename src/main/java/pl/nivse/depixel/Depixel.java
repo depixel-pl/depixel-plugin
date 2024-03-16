@@ -12,6 +12,7 @@ import pl.nivse.depixel.commands.MsgCommand;
 import pl.nivse.depixel.commands.ReplyCommand;
 import pl.nivse.depixel.listeners.PlayerChat;
 import pl.nivse.depixel.listeners.PlayerJoin;
+import pl.nivse.depixel.listeners.PlayerLeave;
 import pl.nivse.depixel.object.DepixelPlayer;
 
 import java.util.HashMap;
@@ -40,6 +41,7 @@ public final class Depixel extends JavaPlugin {
     public void registerEvents() {
         plugin.getServer().getPluginManager().registerEvents(new PlayerChat(), plugin);
         plugin.getServer().getPluginManager().registerEvents(new PlayerJoin(), plugin);
+        plugin.getServer().getPluginManager().registerEvents(new PlayerLeave(), plugin);
     }
 
     @Override
