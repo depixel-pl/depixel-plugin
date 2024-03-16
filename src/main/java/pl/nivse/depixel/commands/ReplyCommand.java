@@ -17,13 +17,12 @@ public class ReplyCommand {
     void execute(Server server, Player sender, @Joiner @Name("wiadomość") String message){
         DepixelPlayer messageSender = Depixel.depixelPlayers.get(sender);
         DepixelPlayer messageReciever = messageSender.getLastMessenger();
-        String recieverDisplayName = messageReciever.getDisplayName();
-        String senderDisplayName = messageSender.getDisplayName();
-
-        if(messageReciever.getPlayer() == null){
+        if(messageReciever == null){
             messageSender.getPlayer().sendMessage(Depixel.getMiniMessage().deserialize(Utils.toMiniMessage(Depixel.getPlugin().getConfig().getString("messages.playerNotOnline"))));
             return;
         }
+        String recieverDisplayName = messageReciever.getDisplayName();
+        String senderDisplayName = messageSender.getDisplayName();
 
         String format = Depixel.getPlugin().getConfig().getString("msg.format");
 
