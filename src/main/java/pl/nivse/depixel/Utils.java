@@ -8,10 +8,6 @@ import net.kyori.adventure.text.serializer.legacy.LegacyFormat;
 import java.util.regex.Pattern;
 
 public class Utils {
-
-    private static final Pattern HEX_PATTERN = Pattern.compile("&#(\\w{5}[0-9a-f])");
-
-
     public static String toMiniMessage(String input) {
         char[] legacyColors = "0123456789abcdef".toCharArray();
         char[] legacyFormatting = "klmno".toCharArray();
