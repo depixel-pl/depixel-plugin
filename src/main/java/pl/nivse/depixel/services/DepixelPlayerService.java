@@ -21,7 +21,7 @@ public class DepixelPlayerService {
     /**
      * Retrieves the DepixelPlayer instance associated with player.
      *
-     * @param player DepixelPlayer instance of given player to retrieve
+     * @param player The player whose DepixelPlayer instance is to be retrieved.
      * @return The DepixelPlayer instance of the given player.
      */
     public DepixelPlayer getPlayer(Player player) {
