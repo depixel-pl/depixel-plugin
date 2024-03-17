@@ -17,7 +17,6 @@ public class DepixelPlayer {
     public Player getPlayer() {
         return player;
     }
-
     public DepixelPlayer getLastMessenger(){
         return lastMessenger;
     }

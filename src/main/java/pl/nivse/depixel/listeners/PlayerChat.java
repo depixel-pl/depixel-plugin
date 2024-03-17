@@ -69,8 +69,7 @@ public class PlayerChat implements Listener {
             Component delimiter = parseString(player, Depixel.getPlugin().getConfig().getString("chat.delimiter"));
             Component message = parseStringWithPermissions(player, plainTextComponentSerializer.serialize(originalMessage));
 
-            Component renderedMessage = Component.empty().append(displayName).append(Component.text(" ")).append(delimiter).append(Component.text(" ")).append(message);
-            return renderedMessage;
+            return Component.empty().append(displayName).append(Component.text(" ")).append(delimiter).append(Component.text(" ")).append(message);
         }));
     }
 }
