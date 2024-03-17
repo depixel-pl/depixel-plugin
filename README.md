@@ -5,5 +5,5 @@
 - helpop command
 - msg and reply command
 
-##Planned:
+## Planned:
 - Group chats
