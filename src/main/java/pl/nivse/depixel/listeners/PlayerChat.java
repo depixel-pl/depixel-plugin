@@ -38,7 +38,6 @@ public class PlayerChat implements Listener {
 
     //Parse string without checking formatting permissions
     private Component parseString(Player player, String s){
-
         s = PlaceholderAPI.setPlaceholders(player, s);
         s = Utils.toMiniMessage(s);
 
@@ -47,7 +46,6 @@ public class PlayerChat implements Listener {
 
     //Parse string while checking formatting permissions
     private Component parseStringWithPermissions(Player player, String s){
-
         TagResolver.Builder tagResolver = TagResolver.builder();
         formattingPermissions.forEach((permission, resolver) -> {
             if(player.hasPermission(permission)){
