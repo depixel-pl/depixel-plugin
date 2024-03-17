@@ -8,6 +8,7 @@ import net.kyori.adventure.text.serializer.legacy.LegacyFormat;
 import java.util.regex.Pattern;
 
 public class Utils {
+
     public static String toMiniMessage(String input) {
         char[] legacyColors = "0123456789abcdef".toCharArray();
         char[] legacyFormatting = "klmno".toCharArray();
