@@ -15,21 +15,19 @@ import pl.nivse.depixel.commands.ReplyCommand;
 import pl.nivse.depixel.listeners.PlayerChat;
 import pl.nivse.depixel.listeners.PlayerJoin;
 import pl.nivse.depixel.listeners.PlayerLeave;
-import pl.nivse.depixel.object.DepixelPlayer;
-
-import java.util.HashMap;
-import java.util.Map;
+import pl.nivse.depixel.services.DepixelPlayerService;
 
 public final class Depixel extends JavaPlugin {
     private static JavaPlugin plugin;
     private static final MiniMessage miniMessage = MiniMessage.miniMessage();
     private LiteCommands liteCommands;
-    public static Map<Player, DepixelPlayer> depixelPlayers = new HashMap<>();
+    private static DepixelPlayerService DepixelPlayerService;
 
     @Override
     public void onEnable() {
         plugin = this;
         plugin.saveDefaultConfig();
+        DepixelPlayerService = new DepixelPlayerService();
         registerEvents();
 
         this.liteCommands = LitePaperAdventureFactory.builder(this.getServer(), "depixel")
@@ -59,5 +57,9 @@ public final class Depixel extends JavaPlugin {
 
     public static MiniMessage getMiniMessage(){
         return miniMessage;
+    }
+
+    public static DepixelPlayerService getDepixelPlayerService() {
+        return DepixelPlayerService;
     }
 }

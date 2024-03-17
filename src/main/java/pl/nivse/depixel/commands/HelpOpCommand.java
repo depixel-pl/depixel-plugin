@@ -9,13 +9,15 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import pl.nivse.depixel.Depixel;
 import pl.nivse.depixel.Utils;
+import pl.nivse.depixel.services.DepixelPlayerService;
 
 @Route(name = "helpop", aliases = {"hop"})
 public class HelpOpCommand {
     @Execute
     void execute(Player sender, @Joiner @Name("wiadomość") String message){
+        DepixelPlayerService playerService = Depixel.getDepixelPlayerService();
         message = Depixel.getPlugin().getConfig().getString("helpOp.format")
-                .replace("{sender}", Depixel.depixelPlayers.get(sender).getDisplayName())
+                .replace("{sender}", playerService.getPlayer(sender.getPlayer()).getDisplayName())
                 .replace("{message}", message);
         Component helpOpMessage = Depixel.getMiniMessage().deserialize(Utils.toMiniMessage(message));
         Bukkit.broadcast(helpOpMessage, "depixel.helpOp");

@@ -8,14 +8,17 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import pl.nivse.depixel.Depixel;
 import pl.nivse.depixel.Utils;
-import pl.nivse.depixel.object.DepixelPlayer;
+import pl.nivse.depixel.objects.DepixelPlayer;
 import dev.rollczi.litecommands.command.execute.Execute;
+import pl.nivse.depixel.services.DepixelPlayerService;
 
 @Route(name = "reply", aliases = {"r"})
 public class ReplyCommand {
     @Execute
     void execute(Server server, Player sender, @Joiner @Name("wiadomość") String message){
-        DepixelPlayer messageSender = Depixel.depixelPlayers.get(sender);
+        DepixelPlayerService playerService = Depixel.getDepixelPlayerService();
+
+        DepixelPlayer messageSender = playerService.getPlayer(sender);
         DepixelPlayer messageReciever = messageSender.getLastMessenger();
         if(messageReciever == null){
             messageSender.getPlayer().sendMessage(Depixel.getMiniMessage().deserialize(Utils.toMiniMessage(Depixel.getPlugin().getConfig().getString("messages.playerNotOnline"))));
@@ -32,6 +35,6 @@ public class ReplyCommand {
         Component finalMessage = Depixel.getMiniMessage().deserialize(format);
         messageSender.getPlayer().sendMessage(finalMessage);
         messageReciever.getPlayer().sendMessage(finalMessage);
-        messageReciever.setLastMessenger(Depixel.depixelPlayers.get(sender));
+        messageReciever.setLastMessenger(playerService.getPlayer(sender));
     }
 }

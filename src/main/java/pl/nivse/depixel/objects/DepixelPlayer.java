@@ -1,4 +1,4 @@
-package pl.nivse.depixel.object;
+package pl.nivse.depixel.objects;
 
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.entity.Player;

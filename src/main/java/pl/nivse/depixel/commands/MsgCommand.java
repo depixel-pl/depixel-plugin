@@ -10,14 +10,17 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import pl.nivse.depixel.Depixel;
 import pl.nivse.depixel.Utils;
-import pl.nivse.depixel.object.DepixelPlayer;
+import pl.nivse.depixel.objects.DepixelPlayer;
+import pl.nivse.depixel.services.DepixelPlayerService;
 
 @Route(name =  "msg")
 public class MsgCommand {
     @Execute
     void execute(Server server, Player sender, @Arg @Name("gracz") Player reciever, @Joiner @Name("wiadomość") String message){
-        DepixelPlayer messageReciever = Depixel.depixelPlayers.get(reciever);
-        DepixelPlayer messageSender = Depixel.depixelPlayers.get(sender);
+        DepixelPlayerService playerService = Depixel.getDepixelPlayerService();
+
+        DepixelPlayer messageReciever = playerService.getPlayer(reciever);
+        DepixelPlayer messageSender = playerService.getPlayer(sender);
         String recieverDisplayName = messageReciever.getDisplayName();
         String senderDisplayName = messageSender.getDisplayName();
 
@@ -29,6 +32,6 @@ public class MsgCommand {
         Component finalMessage = Depixel.getMiniMessage().deserialize(format);
         messageSender.getPlayer().sendMessage(finalMessage);
         messageReciever.getPlayer().sendMessage(finalMessage);
-        messageReciever.setLastMessenger(Depixel.depixelPlayers.get(sender));
+        messageReciever.setLastMessenger(playerService.getPlayer(sender));
     }
 }
