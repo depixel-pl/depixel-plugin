@@ -5,6 +5,9 @@ chat:
   # {message} -> wiadomość
   message: "{message}"
 
+broadcast:
+  format: "[&cBroadcast] <gray>»</gray> {message}"
+
 msg:
   #
   # {sender} -> Osoba wysyłająca wiadomość

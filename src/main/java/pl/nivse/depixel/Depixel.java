@@ -8,6 +8,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import pl.nivse.depixel.commands.BroadcastCommand;
 import pl.nivse.depixel.commands.HelpOpCommand;
 import pl.nivse.depixel.commands.MsgCommand;
 import pl.nivse.depixel.commands.ReplyCommand;
@@ -35,6 +36,7 @@ public final class Depixel extends JavaPlugin {
                 .commandInstance(new MsgCommand())
                 .commandInstance(new ReplyCommand())
                 .commandInstance(new HelpOpCommand())
+                .commandInstance(new BroadcastCommand())
                 .contextualBind(Player.class, new BukkitOnlyPlayerContextual<>("&cTa komenda jest dostępna tylko dla graczy!"))
                 .argument(Player.class, new BukkitPlayerArgument<>(plugin.getServer(), "&cNie znaleziono gracza."))
                 .register();

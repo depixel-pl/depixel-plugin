@@ -18,7 +18,6 @@ public class HelpOpCommand {
                 .replace("{sender}", Depixel.depixelPlayers.get(sender).getDisplayName())
                 .replace("{message}", message);
         Component helpOpMessage = Depixel.getMiniMessage().deserialize(Utils.toMiniMessage(message));
-
         Bukkit.broadcast(helpOpMessage, "depixel.helpOp");
         sender.sendMessage(helpOpMessage);
     }
