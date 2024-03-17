@@ -6,7 +6,7 @@ chat:
   message: "{message}"
 
 broadcast:
-  format: "[&cBroadcast] <gray>»</gray> {message}"
+  format: "[&cBroadcast] &7»{message}"
 
 msg:
   #
