@@ -15,6 +15,7 @@ public class DatabaseManager {
         config.setPassword(password);
         dataSource = new HikariDataSource(config);
     }
+    
     public void close() {
         if (dataSource != null) {
             dataSource.close();
