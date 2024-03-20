@@ -1,3 +1,8 @@
+database:
+  url: "jdbc:mysql://localhost:3306/database"
+  username: "exampleuser"
+  password: "examplepassword"
+
 chat:
   # {player} -> Nick Gracza
   displayName: "{player}"

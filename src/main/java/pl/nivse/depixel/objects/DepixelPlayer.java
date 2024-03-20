@@ -27,7 +27,6 @@ public class DepixelPlayer {
         return lastMessenger;
     }
 
-
     /**
      * Sets the last player who sent a message to this player.
      *
