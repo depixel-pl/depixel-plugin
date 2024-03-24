@@ -7,3 +7,5 @@
 - broadcast command - broadcast shows on chat and actionbar
 ## Planned:
 - Group chats
+## Conflicts:
+- EssentialsX Chat (and probably any chat formatting plugin ig)
