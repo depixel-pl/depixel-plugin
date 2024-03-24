@@ -10,10 +10,7 @@ import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import pl.nivse.depixel.commands.BroadcastCommand;
-import pl.nivse.depixel.commands.HelpOpCommand;
-import pl.nivse.depixel.commands.MsgCommand;
-import pl.nivse.depixel.commands.ReplyCommand;
+import pl.nivse.depixel.commands.*;
 import pl.nivse.depixel.database.DatabaseManager;
 import pl.nivse.depixel.listeners.PlayerChat;
 import pl.nivse.depixel.listeners.PlayerJoin;
@@ -58,8 +55,12 @@ public final class Depixel extends JavaPlugin {
                 .commandInstance(new ReplyCommand())
                 .commandInstance(new HelpOpCommand())
                 .commandInstance(new BroadcastCommand())
+                .commandInstance(new ReloadCommand())
                 .contextualBind(Player.class, new BukkitOnlyPlayerContextual<>("&cTa komenda jest dostępna tylko dla graczy!"))
                 .argument(Player.class, new BukkitPlayerArgument<>(plugin.getServer(), "&cNie znaleziono gracza."))
+                .permissionHandler((commandSender, liteInvocation, requiredPermissions) -> {
+                    commandSender.sendMessage(miniMessage.deserialize(Utils.toMiniMessage("&cNie masz permisji by wykonać tą komendę.")));
+                })
                 .register();
     }
     public void databaseConnection() throws SQLException {
