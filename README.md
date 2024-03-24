@@ -7,4 +7,3 @@
 - broadcast command - broadcast shows on chat and actionbar
 ## Planned:
 - Group chats
-- multimsg commmand
