@@ -10,6 +10,6 @@ public class PlayerJoin implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent e){
         Player player = e.getPlayer();
-        Depixel.getDepixelPlayerService().addPlayer(player);
+        Depixel.getUserService().addPlayer(player);
     }
 }

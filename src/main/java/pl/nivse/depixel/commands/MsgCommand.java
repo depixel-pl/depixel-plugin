@@ -10,17 +10,17 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import pl.nivse.depixel.Depixel;
 import pl.nivse.depixel.Utils;
-import pl.nivse.depixel.objects.DepixelPlayer;
-import pl.nivse.depixel.services.DepixelPlayerService;
+import pl.nivse.depixel.objects.User;
+import pl.nivse.depixel.services.UserService;
 
 @Route(name =  "msg")
 public class MsgCommand {
     @Execute
     void execute(Server server, Player sender, @Arg @Name("gracz") Player reciever, @Joiner @Name("wiadomość") String message){
-        DepixelPlayerService playerService = Depixel.getDepixelPlayerService();
+        UserService playerService = Depixel.getUserService();
 
-        DepixelPlayer messageReciever = playerService.getPlayer(reciever);
-        DepixelPlayer messageSender = playerService.getPlayer(sender);
+        User messageReciever = playerService.getPlayer(reciever);
+        User messageSender = playerService.getPlayer(sender);
         String recieverDisplayName = messageReciever.getDisplayName();
         String senderDisplayName = messageSender.getDisplayName();
 

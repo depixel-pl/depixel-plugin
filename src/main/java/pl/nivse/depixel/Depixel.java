@@ -15,7 +15,8 @@ import pl.nivse.depixel.database.DatabaseManager;
 import pl.nivse.depixel.listeners.PlayerChat;
 import pl.nivse.depixel.listeners.PlayerJoin;
 import pl.nivse.depixel.listeners.PlayerLeave;
-import pl.nivse.depixel.services.DepixelPlayerService;
+import pl.nivse.depixel.services.UserService;
+import pl.nivse.depixel.services.GroupService;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -25,15 +26,21 @@ public final class Depixel extends JavaPlugin {
     private static JavaPlugin plugin;
     private static final MiniMessage miniMessage = MiniMessage.miniMessage();
     private LiteCommands liteCommands;
-    private static DepixelPlayerService DepixelPlayerService;
+    private static UserService userService;
+    private static GroupService groupService;
     private static DatabaseManager databaseManager;
     private HikariDataSource dataSource = new HikariDataSource();
+
+    public static GroupService getGroupService() {
+        return groupService;
+    }
 
     @Override
     public void onEnable() {
         plugin = this;
         plugin.saveDefaultConfig();
-        DepixelPlayerService = new DepixelPlayerService();
+        userService = new UserService();
+        groupService = new GroupService();
         registerCommands();
         registerEvents();
         try {
@@ -56,6 +63,7 @@ public final class Depixel extends JavaPlugin {
                 .commandInstance(new HelpOpCommand())
                 .commandInstance(new BroadcastCommand())
                 .commandInstance(new ReloadCommand())
+                .commandInstance(new GroupCommand())
                 .contextualBind(Player.class, new BukkitOnlyPlayerContextual<>("&cTa komenda jest dostępna tylko dla graczy!"))
                 .argument(Player.class, new BukkitPlayerArgument<>(plugin.getServer(), "&cNie znaleziono gracza."))
                 .permissionHandler((commandSender, liteInvocation, requiredPermissions) -> commandSender.sendMessage(miniMessage.deserialize(Utils.toMiniMessage("&cNie masz permisji by wykonać tą komendę."))))
@@ -93,7 +101,7 @@ public final class Depixel extends JavaPlugin {
         return miniMessage;
     }
 
-    public static DepixelPlayerService getDepixelPlayerService() {
-        return DepixelPlayerService;
+    public static UserService getUserService() {
+        return userService;
     }
 }

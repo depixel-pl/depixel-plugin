@@ -2,7 +2,9 @@ package pl.nivse.depixel.listeners;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.clip.placeholderapi.PlaceholderAPI;
+import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
@@ -15,6 +17,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.permissions.Permission;
 import pl.nivse.depixel.Depixel;
 import pl.nivse.depixel.Utils;
+import pl.nivse.depixel.objects.Group;
+import pl.nivse.depixel.services.UserService;
 
 import java.util.HashMap;
 
@@ -22,6 +26,7 @@ public class PlayerChat implements Listener {
     MiniMessage miniMessage = Depixel.getMiniMessage();
     HashMap<Permission, TagResolver> formattingPermissions = new HashMap<>();
     private final PlainTextComponentSerializer plainTextComponentSerializer = PlainTextComponentSerializer.plainText();
+    UserService userService = Depixel.getUserService();
 
     public PlayerChat(){
         formattingPermissions.put(new Permission("depixel.color"), StandardTags.color());
@@ -64,12 +69,15 @@ public class PlayerChat implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void playerChatEvent(AsyncChatEvent e){
-        e.renderer(((player, sourceDisplayName, originalMessage, audience) -> {
-            Component displayName = parseString(player, Depixel.getPlugin().getConfig().getString("chat.displayName").replace("{player}", player.getName()));
-            Component delimiter = parseString(player, Depixel.getPlugin().getConfig().getString("chat.delimiter"));
-            Component message = parseStringWithPermissions(player, plainTextComponentSerializer.serialize(originalMessage));
-
-            return Component.empty().append(displayName).append(Component.text(" ")).append(delimiter).append(Component.text(" ")).append(message);
-        }));
+        Component displayName = parseString(e.getPlayer(), Depixel.getPlugin().getConfig().getString("chat.displayName").replace("{player}", e.getPlayer().getName()));
+        Component delimiter = parseString(e.getPlayer(), Depixel.getPlugin().getConfig().getString("chat.delimiter"));
+        Component message = parseStringWithPermissions(e.getPlayer(), plainTextComponentSerializer.serialize(e.originalMessage()));
+        if(userService.getPlayer(e.getPlayer()).getCurrentGroup() != null){
+            Group group = userService.getPlayer(e.getPlayer()).getCurrentGroup();
+            group.getAudience().sendMessage(Component.empty().append(parseString(e.getPlayer(), "<yellow>[</yellow>" + group.getName() + "<yellow>]</yellow>")).append(Component.text(" ")).append(displayName).append(Component.text(" ")).append(delimiter).append(Component.text(" ")).append(message));
+            e.setCancelled(true);
+            return;
+        }
+        e.renderer(((player, sourceDisplayName, originalMessage, audience) -> Component.empty().append(displayName).append(Component.text(" ")).append(delimiter).append(Component.text(" ")).append(message)));
     }
 }

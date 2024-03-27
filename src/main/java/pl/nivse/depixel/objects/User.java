@@ -5,11 +5,17 @@ import org.bukkit.entity.Player;
 import pl.nivse.depixel.Depixel;
 import pl.nivse.depixel.Utils;
 
-public class DepixelPlayer {
-    private final Player player;
-    private DepixelPlayer lastMessenger;
+import java.util.ArrayList;
+import java.util.Collection;
 
-    public DepixelPlayer(Player player) {
+public class User {
+    private final Player player;
+    private User lastMessenger;
+    private Group group;
+    private final Collection<Group> groups = new ArrayList<>();
+    private final Collection<Invite> invites = new ArrayList<>();
+
+    public User(Player player) {
         this.player = player;
         this.lastMessenger = null;
     }
@@ -18,12 +24,39 @@ public class DepixelPlayer {
         return player;
     }
 
+    public Collection<Group> getGroups() {
+        return groups;
+    }
+
+    public void addGroup(Group group) {
+        groups.add(group);
+    }
+
+    public void removeGroup(Group group) {
+        groups.remove(group);
+    }
+
+    public Group getCurrentGroup(){
+        return group;
+    }
+
+    public void setCurrentGroup(Group group1){
+        group = group1;
+    }
+
+    public void addInvite(Invite invite){
+        invites.add(invite);
+    }
+
+    public void removeInvite(Invite invite){
+        invites.remove(invite);
+    }
     /**
      * Retrieves the last player who sent a message to this player.
      *
      * @return The last player who messaged this player.
      */
-    public DepixelPlayer getLastMessenger(){
+    public User getLastMessenger(){
         return lastMessenger;
     }
 
@@ -32,7 +65,7 @@ public class DepixelPlayer {
      *
      * @param lastMessenger The last player who messaged this player.
      */
-    public void setLastMessenger(DepixelPlayer lastMessenger) {
+    public void setLastMessenger(User lastMessenger) {
         this.lastMessenger = lastMessenger;
     }
 

@@ -8,18 +8,18 @@ import org.bukkit.Server;
 import org.bukkit.entity.Player;
 import pl.nivse.depixel.Depixel;
 import pl.nivse.depixel.Utils;
-import pl.nivse.depixel.objects.DepixelPlayer;
+import pl.nivse.depixel.objects.User;
 import dev.rollczi.litecommands.command.execute.Execute;
-import pl.nivse.depixel.services.DepixelPlayerService;
+import pl.nivse.depixel.services.UserService;
 
 @Route(name = "reply", aliases = {"r"})
 public class ReplyCommand {
     @Execute
     void execute(Server server, Player sender, @Joiner @Name("wiadomość") String message){
-        DepixelPlayerService playerService = Depixel.getDepixelPlayerService();
+        UserService playerService = Depixel.getUserService();
 
-        DepixelPlayer messageSender = playerService.getPlayer(sender);
-        DepixelPlayer messageReciever = messageSender.getLastMessenger();
+        User messageSender = playerService.getPlayer(sender);
+        User messageReciever = messageSender.getLastMessenger();
         if(messageReciever == null){
             messageSender.getPlayer().sendMessage(Depixel.getMiniMessage().deserialize(Utils.toMiniMessage(Depixel.getPlugin().getConfig().getString("messages.playerNotOnline"))));
             return;

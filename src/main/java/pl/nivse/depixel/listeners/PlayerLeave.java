@@ -10,6 +10,6 @@ public class PlayerLeave implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerQuitEvent e){
         Player player = e.getPlayer();
-        Depixel.getDepixelPlayerService().removePlayer(player);
+        Depixel.getUserService().removePlayer(player);
     }
 }
