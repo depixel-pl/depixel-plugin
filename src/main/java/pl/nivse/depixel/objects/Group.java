@@ -46,10 +46,7 @@ public class Group {
     }
 
     public boolean isMember(Player player){
-        for (Player player1 : members){
-            if(player1 == player) return true;
-        }
-        return false;
+        return members.contains(player);
     }
     public void addMember(Player member) {
         members.add(member);
