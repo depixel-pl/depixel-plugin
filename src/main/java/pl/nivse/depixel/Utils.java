@@ -1,5 +1,6 @@
 package pl.nivse.depixel;
 
+import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
@@ -32,6 +33,10 @@ public class Utils {
         }
 
         return output;
+    }
+
+    public static Component parseMessage(String input) {
+        return Depixel.getMiniMessage().deserialize(Utils.toMiniMessage(input));
     }
 
 }

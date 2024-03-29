@@ -17,7 +17,7 @@ public class BroadcastCommand {
         message = Depixel.getPlugin().getConfig().getString("broadcast.format")
                 .replace("{message}", message);
 
-        audience.sendMessage(Depixel.getMiniMessage().deserialize(Utils.toMiniMessage(message)));
-        audience.sendActionBar(Depixel.getMiniMessage().deserialize(Utils.toMiniMessage(message)));
+        audience.sendMessage(Utils.parseMessage(message));
+        audience.sendActionBar(Utils.parseMessage(message));
     }
 }

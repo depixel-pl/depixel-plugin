@@ -11,6 +11,6 @@ public class ReloadCommand {
     @Permission("depixel.reload")
     void execute(Player sender){
         Depixel.getPlugin().reloadConfig();
-        sender.sendMessage(Depixel.getMiniMessage().deserialize(Utils.toMiniMessage("&aPrzeładowano plugin!")));
+        sender.sendMessage(Utils.parseMessage("&aPrzeładowano plugin!"));
     }
 }

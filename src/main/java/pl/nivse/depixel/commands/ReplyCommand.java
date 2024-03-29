@@ -21,7 +21,7 @@ public class ReplyCommand {
         User messageSender = playerService.getPlayer(sender);
         User messageReciever = messageSender.getLastMessenger();
         if(messageReciever == null){
-            messageSender.getPlayer().sendMessage(Depixel.getMiniMessage().deserialize(Utils.toMiniMessage(Depixel.getPlugin().getConfig().getString("messages.playerNotOnline"))));
+            messageSender.getPlayer().sendMessage(Utils.parseMessage(Depixel.getPlugin().getConfig().getString("messages.playerNotOnline")));
             return;
         }
         String recieverDisplayName = messageReciever.getDisplayName();
@@ -30,9 +30,8 @@ public class ReplyCommand {
         String format = Depixel.getPlugin().getConfig().getString("msg.format");
 
         format = format.replace("{sender}", senderDisplayName).replace("{reciever}", recieverDisplayName).replace("{message}", message);
-        format = Utils.toMiniMessage(format);
 
-        Component finalMessage = Depixel.getMiniMessage().deserialize(format);
+        Component finalMessage = Utils.parseMessage(format);
         messageSender.getPlayer().sendMessage(finalMessage);
         messageReciever.getPlayer().sendMessage(finalMessage);
         messageReciever.setLastMessenger(playerService.getPlayer(sender));

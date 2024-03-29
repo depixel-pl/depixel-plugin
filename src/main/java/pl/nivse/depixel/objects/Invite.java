@@ -13,7 +13,6 @@ public class Invite {
         this.group = group;
     }
 
-    // Getter methods
     public Player getSender() {
         return sender;
     }
