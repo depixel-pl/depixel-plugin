@@ -19,4 +19,8 @@ public class GroupService {
     public void removeGroup(Group group){
         groups.remove(group);
     }
+
+    public Map<String, Group> getGroups() {
+        return groups;
+    }
 }

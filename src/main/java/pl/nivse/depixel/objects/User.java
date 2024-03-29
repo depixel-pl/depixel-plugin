@@ -12,7 +12,6 @@ public class User {
     private final Player player;
     private User lastMessenger;
     private Group group;
-    private final Collection<Group> groups = new ArrayList<>();
     private final Collection<Invite> invites = new ArrayList<>();
 
     public User(Player player) {
@@ -22,18 +21,6 @@ public class User {
 
     public Player getPlayer() {
         return player;
-    }
-
-    public Collection<Group> getGroups() {
-        return groups;
-    }
-
-    public void addGroup(Group group) {
-        groups.add(group);
-    }
-
-    public void removeGroup(Group group) {
-        groups.remove(group);
     }
 
     public Group getCurrentGroup(){

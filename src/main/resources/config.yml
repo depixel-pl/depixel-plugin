@@ -46,3 +46,4 @@ messages:
   successfullyKicked: "&e[Grupy]&f Wyrzucono gracza {user}"
   gotKicked: "&e[Grupy]&f Wyrzucono cię z grupy {group}"
   memberGotKicked: "&e[Grupy]&f Gracz {user} został wyrzucony z grupy {group}"
+  playerInviteExpire: "&e[Grupy]&f Gracz {user} wyszedł, jego zaproszenie do grupy wygasło."

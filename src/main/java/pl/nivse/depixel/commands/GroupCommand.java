@@ -30,11 +30,9 @@ public class GroupCommand {
             sender.sendMessage(miniMessage.deserialize(Utils.toMiniMessage(Depixel.getPlugin().getConfig().getString("messages.groupAlreadyExists"))));
             return;
         }
-
-        group = new Group(groupName, sender);
+        group = new Group(groupName, sender.getUniqueId());
         group.addMember(sender);
         groupService.addGroup(groupName, group);
-        userService.getPlayer(sender).addGroup(group);
         sender.sendMessage(miniMessage.deserialize(Utils.toMiniMessage(Depixel.getPlugin().getConfig().getString("messages.groupCreated").replace("{group}", group.getName()))));
     }
     @Execute(route = "invite")
@@ -80,7 +78,6 @@ public class GroupCommand {
         group.removeInvite(invite);
         group.addMember(sender);
         userService.getPlayer(sender).removeInvite(invite);
-        userService.getPlayer(sender).addGroup(group);
         sender.sendMessage(miniMessage.deserialize(Utils.toMiniMessage(Depixel.getPlugin().getConfig().getString("messages.inviteAccepted"))));
         group.getAudience().sendMessage(miniMessage.deserialize(Utils.toMiniMessage(Depixel.getPlugin().getConfig().getString("messages.memberJoined")).replace("{user}", sender.getName()).replace("{group}", group.getName())));
     }
@@ -88,7 +85,7 @@ public class GroupCommand {
     @Execute(route = "set")
     void set(Player sender, @Arg @Name("grupa") String groupName){
         group = groupService.getGroup(groupName);
-        if(!userService.getPlayer(sender).getGroups().contains(group) || group == null){
+        if(!group.isMember(sender) || group == null){
             sender.sendMessage(miniMessage.deserialize(Utils.toMiniMessage(Depixel.getPlugin().getConfig().getString("messages.switchToGlobal"))));
             return;
         }
@@ -103,16 +100,18 @@ public class GroupCommand {
         if(group.isLeader(sender)){
             sender.sendMessage(miniMessage.deserialize(Utils.toMiniMessage(Depixel.getPlugin().getConfig().getString("messages.leaderCantLeaveGroup").replace("{group}", group.getName()))));
         }
-        if(!userService.getPlayer(sender).getGroups().contains(group)){
+
+        if(!group.isMember(sender)){
             sender.sendMessage(miniMessage.deserialize(Utils.toMiniMessage(Depixel.getPlugin().getConfig().getString("messages.groupDoesntExist"))));
             return;
         }
+
         if(userService.getPlayer(sender).getCurrentGroup() == group){
             userService.getPlayer(sender).setCurrentGroup(null);
             sender.sendMessage(miniMessage.deserialize(Utils.toMiniMessage(Depixel.getPlugin().getConfig().getString("messages.switchToGlobal"))));
         }
+
         group.removeMember(sender);
-        userService.getPlayer(sender).removeGroup(group);
         group.getAudience().sendMessage(miniMessage.deserialize(Utils.toMiniMessage(Depixel.getPlugin().getConfig().getString("messages.memberLeft").replace("{user}", sender.getName()).replace("{group}", group.getName()))));
         sender.sendMessage(miniMessage.deserialize(Utils.toMiniMessage(Depixel.getPlugin().getConfig().getString("messages.groupLeft").replace("{group}", groupName))));
     }
@@ -127,9 +126,7 @@ public class GroupCommand {
             sender.sendMessage(miniMessage.deserialize(Utils.toMiniMessage(Depixel.getPlugin().getConfig().getString("messages.notInGroup").replace("{user}", kicked.getName()))));
             return;
         }
-
         group.removeMember(kicked);
-        userService.getPlayer(sender).removeGroup(group);
 
         sender.sendMessage(miniMessage.deserialize(Utils.toMiniMessage(Depixel.getPlugin().getConfig().getString("messages.successfullyKicked").replace("{user}", kicked.getName()))));
         kicked.sendMessage(miniMessage.deserialize(Utils.toMiniMessage(Depixel.getPlugin().getConfig().getString("messages.gotKicked").replace("{group}", group.getName()))));
