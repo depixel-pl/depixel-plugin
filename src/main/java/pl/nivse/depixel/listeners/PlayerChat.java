@@ -2,9 +2,7 @@ package pl.nivse.depixel.listeners;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.clip.placeholderapi.PlaceholderAPI;
-import net.kyori.adventure.audience.Audience;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.TextColor;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
@@ -39,6 +37,7 @@ public class PlayerChat implements Listener {
         formattingPermissions.put(new Permission("depixel.rainbow"), StandardTags.rainbow());
         formattingPermissions.put(new Permission("depixel.hover"), StandardTags.hoverEvent());
         formattingPermissions.put(new Permission("depixel.click"), StandardTags.clickEvent());
+        formattingPermissions.put(new Permission("depixel.reset"), StandardTags.reset());
     }
 
     //Parse string without checking formatting permissions

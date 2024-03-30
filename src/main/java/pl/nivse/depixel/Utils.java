@@ -32,6 +32,7 @@ public class Utils {
             output = output.replaceAll("[&]" + x, "<" + decoration.name().toLowerCase() + ">");
         }
 
+        output = output.replaceAll("&r", "<reset>");
         return output;
     }
 

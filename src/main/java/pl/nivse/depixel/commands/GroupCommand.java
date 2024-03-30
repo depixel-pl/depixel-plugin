@@ -4,9 +4,6 @@ import dev.rollczi.litecommands.argument.Arg;
 import dev.rollczi.litecommands.argument.Name;
 import dev.rollczi.litecommands.command.execute.Execute;
 import dev.rollczi.litecommands.command.route.Route;
-import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.minimessage.MiniMessage;
-import org.bukkit.configuration.Configuration;
 import org.bukkit.entity.Player;
 import pl.nivse.depixel.Depixel;
 import pl.nivse.depixel.Utils;
@@ -15,13 +12,12 @@ import pl.nivse.depixel.objects.Invite;
 import pl.nivse.depixel.services.GroupService;
 import pl.nivse.depixel.services.UserService;
 
-import javax.annotation.Nullable;
+import java.util.Arrays;
 
 @Route(name = "group")
 public class GroupCommand {
     UserService userService = Depixel.getUserService();
     GroupService groupService = Depixel.getGroupService();
-    MiniMessage miniMessage = Depixel.getMiniMessage();
     Group group;
 
     @Execute(route = "create")
@@ -82,10 +78,34 @@ public class GroupCommand {
         group.getAudience().sendMessage(Utils.parseMessage(Depixel.getPlugin().getConfig().getString("messages.memberJoined").replace("{user}", sender.getName()).replace("{group}", group.getName())));
     }
 
+    @Execute(route = "delete")
+    void delete(Player sender){
+        group = userService.getPlayer(sender).getCurrentGroup();
+
+        if(group == null){
+            sender.sendMessage(Utils.parseMessage(Depixel.getPlugin().getConfig().getString("messages.groupNotSelected")));
+            return;
+        }
+
+        if(!group.isLeader(sender)){
+            sender.sendMessage(Utils.parseMessage(Depixel.getPlugin().getConfig().getString("messages.notLeader").replace("{group}", group.getName())));
+            return;
+        }
+
+        group.getAudience().sendMessage(Utils.parseMessage(Depixel.getPlugin().getConfig().getString("messages.groupDeleted").replace("{group}", group.getName())));
+        group.getMembers().forEach(player -> {
+            if(userService.getPlayer(player).getCurrentGroup() == group){
+                userService.getPlayer(player).setCurrentGroup(null);
+                player.sendMessage(Utils.parseMessage(Depixel.getPlugin().getConfig().getString("messages.switchToGlobal")));
+            }
+        });
+        groupService.removeGroup(group.getName());
+    }
+
     @Execute(route = "set")
     void set(Player sender, @Arg @Name("grupa") String groupName){
         group = groupService.getGroup(groupName);
-        if(!group.isMember(sender) || group == null){
+        if(group == null || !group.isMember(sender)){
             sender.sendMessage(Utils.parseMessage(Depixel.getPlugin().getConfig().getString("messages.switchToGlobal")));
             return;
         }
@@ -95,8 +115,8 @@ public class GroupCommand {
 
     @Execute(route = "leave")
     void leave(Player sender, @Arg @Name("grupa") String groupName){
-
         group = groupService.getGroup(groupName);
+
         if(group.isLeader(sender)){
             sender.sendMessage(Utils.parseMessage(Depixel.getPlugin().getConfig().getString("messages.leaderCantLeaveGroup").replace("{group}", group.getName())));
         }
@@ -116,7 +136,15 @@ public class GroupCommand {
         sender.sendMessage(Utils.parseMessage(Utils.toMiniMessage(Depixel.getPlugin().getConfig().getString("messages.groupLeft").replace("{group}", groupName))));
     }
 
+    @Execute(route = "kick")
     void kick(Player sender, @Arg @Name("gracz") Player kicked){
+        group = userService.getPlayer(sender).getCurrentGroup();
+
+        if(group == null){
+            sender.sendMessage(Utils.parseMessage(Depixel.getPlugin().getConfig().getString("messages.groupNotSelected")));
+            return;
+        }
+
         if(!group.isLeader(sender)){
             sender.sendMessage(Utils.parseMessage(Depixel.getPlugin().getConfig().getString("messages.notLeader").replace("{group}", group.getName())));
             return;

@@ -7,7 +7,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class DatabaseManager {
-    private HikariDataSource dataSource = new HikariDataSource();
+    private final HikariDataSource dataSource;
     public DatabaseManager(String host, String username, String password) throws SQLException {
         HikariConfig config = new HikariConfig();
         config.setJdbcUrl(host);

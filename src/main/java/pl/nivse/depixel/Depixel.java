@@ -7,6 +7,7 @@ import dev.rollczi.litecommands.bukkit.adventure.paper.LitePaperAdventureFactory
 import dev.rollczi.litecommands.bukkit.tools.BukkitOnlyPlayerContextual;
 import dev.rollczi.litecommands.bukkit.tools.BukkitPlayerArgument;
 import net.kyori.adventure.text.minimessage.MiniMessage;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -17,6 +18,7 @@ import pl.nivse.depixel.listeners.PlayerJoin;
 import pl.nivse.depixel.listeners.PlayerLeave;
 import pl.nivse.depixel.services.UserService;
 import pl.nivse.depixel.services.GroupService;
+import pl.nivse.depixel.tasks.AutoMessageTask;
 
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -43,11 +45,16 @@ public final class Depixel extends JavaPlugin {
         groupService = new GroupService();
         registerCommands();
         registerEvents();
+        scheduleTasks();
         try {
             databaseConnection();
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public void scheduleTasks(){
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(plugin, new AutoMessageTask() ,20L, (getConfig().getInt("autoMessage.delay") * 20L));
     }
 
     public void registerEvents() {

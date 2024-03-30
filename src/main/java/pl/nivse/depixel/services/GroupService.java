@@ -12,12 +12,12 @@ public class GroupService {
         groups.put(name, group);
     }
 
-    public Group getGroup(String group){
-        return groups.get(group);
+    public Group getGroup(String groupName){
+        return groups.get(groupName);
     }
 
-    public void removeGroup(Group group){
-        groups.remove(group);
+    public void removeGroup(String groupName){
+        groups.remove(groupName);
     }
 
     public Map<String, Group> getGroups() {

@@ -23,11 +23,20 @@ msg:
 helpOp:
   format: "&f[&cHelpOp&f] {sender} &7» {message}"
 
+autoMessage:
+  delay: 60 # w sekundach
+  messages:
+    - "Twoja wiadomosc nr.1 tutaj"
+    - "Twoja wiadomosc nr.2 tutaj"
+
 messages:
   playerNotOnline: "&cGracz nie jest online."
+  groupCreated: "&e[Grupy]&f Utworzono grupę o nazwie {group}"
+  groupSet: "&e[Grupy]&f Ustawiono czat na czat grupy {group}!"
   groupNotSelected: "&e[Grupy]&f Nie wybrałeś grupy!"
   groupAlreadyExists: "&e[Grupy]&f Grupa już istnieje."
-  groupCreated: "&e[Grupy]&f Utworzono grupę o nazwie {group}"
+  groupLeft: "&e[Grupy]&f Opuściłeś grupę {group}"
+  groupDeleted: "&e[Grupy]&f Grupa {group} została usunięta."
   notLeader: "&e[Grupy]&f Nie jesteś liderem grupy {group}!"
   alreadyInGroup: "&e[Grupy]&f Gracz {user} jest już w grupie!"
   alreadyInvited: "&e[Grupy]&f Gracz {user} jest już zaproszony do grupy!"
@@ -37,11 +46,9 @@ messages:
   inviteAccepted: "&e[Grupy]&f Zaakceptowano zaproszenie!"
   memberJoined: "&e[Grupy]&f Gracz {user} dołączył do grupy {group}!"
   switchToGlobal: "&e[Grupy]&f Ustawiono czat na globalny."
-  groupSet: "&e[Grupy]&f Ustawiono czat na czat grupy {group}!"
   leaderCantLeaveGroup: "&e[Grupy]&f Nie możesz opuścić grupy {group}, gdyż jesteś jej liderem."
   groupDoesntExist: "&e[Grupy]&f Ta grupa nie istnieje."
   memberLeft: "&e[Grupy]&f {user} opuścił grupę {group}"
-  groupLeft: "&e[Grupy]&f Opuściłeś grupę {group}"
   notInGroup: "&e[Grupy]&f Gracz {user} nie należy do tej grupy."
   successfullyKicked: "&e[Grupy]&f Wyrzucono gracza {user}"
   gotKicked: "&e[Grupy]&f Wyrzucono cię z grupy {group}"
