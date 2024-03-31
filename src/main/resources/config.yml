@@ -29,6 +29,11 @@ autoMessage:
     - "Twoja wiadomosc nr.1 tutaj"
     - "Twoja wiadomosc nr.2 tutaj"
 
+mentions:
+  title: "Gracz <yellow>{player}</yellow> oznaczył cię!"
+  toggledTrue: "&e[Wzmianki]&f Od teraz &aignorujesz &fwzmianki."
+  toggledFalse: "&e[Wzmianki]&f Od teraz &cnie &fignorujesz wzmianek."
+
 messages:
   playerNotOnline: "&cGracz nie jest online."
   groupCreated: "&e[Grupy]&f Utworzono grupę o nazwie {group}"

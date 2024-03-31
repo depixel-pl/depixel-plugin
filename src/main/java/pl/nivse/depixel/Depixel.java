@@ -71,6 +71,7 @@ public final class Depixel extends JavaPlugin {
                 .commandInstance(new BroadcastCommand())
                 .commandInstance(new ReloadCommand())
                 .commandInstance(new GroupCommand())
+                .commandInstance(new IgnoreMentionsCommand())
                 .contextualBind(Player.class, new BukkitOnlyPlayerContextual<>("&cTa komenda jest dostępna tylko dla graczy!"))
                 .argument(Player.class, new BukkitPlayerArgument<>(plugin.getServer(), "&cNie znaleziono gracza."))
                 .permissionHandler((commandSender, liteInvocation, requiredPermissions) -> commandSender.sendMessage(miniMessage.deserialize(Utils.toMiniMessage("&cNie masz permisji by wykonać tą komendę."))))

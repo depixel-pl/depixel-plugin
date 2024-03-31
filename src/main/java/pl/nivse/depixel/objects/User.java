@@ -12,11 +12,22 @@ public class User {
     private final Player player;
     private User lastMessenger;
     private Group group;
+    private boolean ignoresMentions;
     private final Collection<Invite> invites = new ArrayList<>();
 
     public User(Player player) {
         this.player = player;
+        this.group = null;
         this.lastMessenger = null;
+        this.ignoresMentions = false;
+    }
+
+    public boolean ignoresMentions() {
+        return ignoresMentions;
+    }
+
+    public void setIgnoresMentions(boolean ignoresMentions) {
+        this.ignoresMentions = ignoresMentions;
     }
 
     public Player getPlayer() {
@@ -27,8 +38,8 @@ public class User {
         return group;
     }
 
-    public void setCurrentGroup(Group group1){
-        group = group1;
+    public void setCurrentGroup(Group group){
+        this.group = group;
     }
 
     public void addInvite(Invite invite){

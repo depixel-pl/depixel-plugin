@@ -2,12 +2,17 @@ package pl.nivse.depixel.listeners;
 
 import io.papermc.paper.event.player.AsyncChatEvent;
 import me.clip.placeholderapi.PlaceholderAPI;
+import net.kyori.adventure.title.Title;
+import net.kyori.adventure.audience.Audience;
+import net.kyori.adventure.key.Key;
+import net.kyori.adventure.sound.Sound;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.kyori.adventure.text.minimessage.tag.resolver.TagResolver;
 import net.kyori.adventure.text.minimessage.tag.standard.StandardTags;
 import net.kyori.adventure.text.serializer.plain.PlainTextComponentSerializer;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -18,11 +23,16 @@ import pl.nivse.depixel.Utils;
 import pl.nivse.depixel.objects.Group;
 import pl.nivse.depixel.services.UserService;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class PlayerChat implements Listener {
     MiniMessage miniMessage = Depixel.getMiniMessage();
     HashMap<Permission, TagResolver> formattingPermissions = new HashMap<>();
+    Pattern pattern = Pattern.compile("@([a-zA-Z0-9_]+)");
     private final PlainTextComponentSerializer plainTextComponentSerializer = PlainTextComponentSerializer.plainText();
     UserService userService = Depixel.getUserService();
 
@@ -71,12 +81,36 @@ public class PlayerChat implements Listener {
         Component displayName = parseString(e.getPlayer(), Depixel.getPlugin().getConfig().getString("chat.displayName").replace("{player}", e.getPlayer().getName()));
         Component delimiter = parseString(e.getPlayer(), Depixel.getPlugin().getConfig().getString("chat.delimiter"));
         Component message = parseStringWithPermissions(e.getPlayer(), plainTextComponentSerializer.serialize(e.originalMessage()));
+        Group group = userService.getPlayer(e.getPlayer()).getCurrentGroup();
         if(userService.getPlayer(e.getPlayer()).getCurrentGroup() != null){
-            Group group = userService.getPlayer(e.getPlayer()).getCurrentGroup();
+            Sound sound = Sound.sound(Key.key("entity.player.levelup"), Sound.Source.MASTER, 100f, 2f);
+            group.getAudience().playSound(sound);
             group.getAudience().sendMessage(Component.empty().append(parseString(e.getPlayer(), "<yellow>[</yellow>" + group.getName() + "<yellow>]</yellow>")).append(Component.text(" ")).append(displayName).append(Component.text(" ")).append(delimiter).append(Component.text(" ")).append(message));
-            e.setCancelled(true);
             return;
         }
         e.renderer(((player, sourceDisplayName, originalMessage, audience) -> Component.empty().append(displayName).append(Component.text(" ")).append(delimiter).append(Component.text(" ")).append(message)));
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void handleMentions(AsyncChatEvent e){
+        if(e.isCancelled()){
+            return;
+        }
+        String rawMsg = plainTextComponentSerializer.serialize(e.originalMessage());
+        Matcher matcher = pattern.matcher(rawMsg);
+        Collection<String> matches = new ArrayList<>();
+        while(matcher.find()){
+            matches.add(matcher.group());
+        }
+
+        matches.forEach(match -> {
+            match = match.replace("@", "");
+            Player player = Bukkit.getPlayer(match);
+            if(Depixel.getUserService().getPlayer(player).ignoresMentions()) return;
+            if(player != null){
+                player.playSound(Sound.sound(Key.key("entity.player.levelup"), Sound.Source.MASTER, 100f, 2f));
+                player.showTitle(Title.title(Utils.parseMessage(Depixel.getPlugin().getConfig().getString("mentions.title").replace("{player}", e.getPlayer().getName())), Utils.parseMessage(rawMsg)));
+            }
+        });
     }
 }

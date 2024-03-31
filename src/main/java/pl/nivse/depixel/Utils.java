@@ -6,8 +6,6 @@ import net.kyori.adventure.text.format.TextDecoration;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import net.kyori.adventure.text.serializer.legacy.LegacyFormat;
 
-import java.util.regex.Pattern;
-
 public class Utils {
 
     public static String toMiniMessage(String input) {
