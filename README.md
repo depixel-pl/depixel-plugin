@@ -5,7 +5,8 @@
 - helpop command
 - msg and reply command
 - broadcast command - broadcast shows on chat and actionbar
-## Planned:
 - Group chats
+- Mentions (@player)
+
 ## Conflicts:
 - EssentialsX Chat (and probably any chat formatting plugin ig)
